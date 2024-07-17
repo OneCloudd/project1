@@ -3,16 +3,14 @@ package com.github.project1.web.dto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.github.project1.repository.post.PostEntity;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class Post {
     private Integer id;
     private String title;
@@ -28,9 +26,9 @@ public class Post {
 
     public Post(PostEntity postEntity){
         this.id = postEntity.getId();
-        this.title = postEntity.getTitle();
-        this.content = postEntity.getContent();
-        this.author = postEntity.getAuthor();
-        this.createdAt = postEntity.getCreatedAt().toString();
+        this.title = postEntity.getTitle() != null ? postEntity.getTitle() : "";
+        this.content = postEntity.getContent() !=null ? postEntity.getContent() : "";
+        this.author = postEntity.getAuthor() != null ? postEntity.getAuthor() : "";
+        this.createdAt = postEntity.getCreatedAt().toString() !=null ? postEntity.getCreatedAt().toString() : "";
     }
 }
