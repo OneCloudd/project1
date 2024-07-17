@@ -26,18 +26,19 @@ repositories {
 dependencies {
     // jdbc
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    runtimeOnly 'mysql:mysql-connector-java:8.0.26'
-
+    // runtimeOnly 'mysql:mysql-connector-java:8.0.26'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.33'
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor('org.projectlombok:lombok')
 
-// MapStruct
+    // MapStruct
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-
+    // security
+    // implementation 'org.springframework.boot:spring-boot-starter-security'
     // Swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+//    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 //    implementation 'io.springfox:springfox-boot-starter:3.0.0'
 //    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 //    implementation 'io.springfox:springfox-swagger2:2.9.2'
