@@ -2,33 +2,43 @@ package com.github.project1.repository.post;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 //@AllArgsConstructor
+@Entity
+@Table(name = "post")
 @Getter
 @Setter
-@EqualsAndHashCode(of="id")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PostEntity {
-    private Integer id;
-    private Integer userId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
+    private Integer postId;
+
+    @Column(name = "title")
     private String title;
-    private String author;
-    private Date createdAt;
+
+    @Column(name = "content")
     private String content;
 
-    public PostEntity(Integer id, Integer userId, String title, String author, Date createdAt, String content) {
-        this.id = id;
-        this.userId = userId;
-        this.title = title;
-        this.author = author;
-        this.createdAt = createdAt;
-        this.content = content;
-    }
+    @Column(name = "author")
+    private String author;
+
+    @Column(name = "user_id")
+    private Integer userId;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
