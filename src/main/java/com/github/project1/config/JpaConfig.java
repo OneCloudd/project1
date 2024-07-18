@@ -17,18 +17,18 @@ import java.util.Map;
 @Configuration
 @EnableJpaRepositories(
 		basePackages = {"com.github.project1.repository.comment", "com.github.project1.repository.post", "com.github.project1.repository.user"},
-		entityManagerFactoryRef = "entityManagerFactoryBean1",
-		transactionManagerRef = "tmJpa"
+		entityManagerFactoryRef = "entityManagerFactory",
+		transactionManagerRef = "transactionManager"
 )
 public class JpaConfig {
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean1(@Qualifier("dataSource") DataSource dataSource){
+	@Bean(name = "entityManagerFactory")
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("dataSource") DataSource dataSource) {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource);
 		em.setPackagesToScan("com.github.project1.repository.comment", "com.github.project1.repository.post", "com.github.project1.repository.user");
 
-		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
 
 		Map<String, Object> properties = new HashMap<>();
@@ -40,11 +40,10 @@ public class JpaConfig {
 		return em;
 	}
 
-	@Bean(name = "tmJpa")
-	public PlatformTransactionManager transactionManager1(@Qualifier("dataSource") DataSource dataSource){
+	@Bean(name = "transactionManager")
+	public PlatformTransactionManager transactionManager(@Qualifier("entityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory(entityManagerFactoryBean1(dataSource).getObject());
+		transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
 		return transactionManager;
 	}
-
 }
